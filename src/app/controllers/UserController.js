@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const userService = require('../../services/user')
+const { Exception } = require('handlebars')
 
 class UserController {
     //[GET]
@@ -16,14 +17,36 @@ class UserController {
     }
     //[POST]
     async loginUser(req, res) {
-        const { username, password } = req.body
-        res.send('POST login Users')
+        const { email, password } = req.body
+        try {
+            const existingUser = await userService.login({email, password})
+            res.status(200).json({
+                message: 'Login user successfully',
+                data: existingUser
+            })
+        } catch (exception) {
+            res.status(500).json({
+                message: exception.toString()
+            })
+        }
 
     }
     //[POST]
     async registerUser(req, res) {
-        const {username, password} = req.body
-        const user = await userService.register
+        const {email, password} = req.body
+        try {
+            const user = await userService.register({email, password})
+            res.status(201).json({
+                message: 'Register user successfully',
+                data: user
+            })
+
+        } catch (exception) {
+            res.status(500).json({
+                message: exception.toString()
+            })
+        }
+        
     }
     // async getAllUser(req, res) {
     //     User.findAll()
