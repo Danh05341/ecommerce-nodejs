@@ -3,9 +3,9 @@ const route = express.Router()
 const userControllor = require('../app/controllers/UserController')
 const { checkToken } = require('../middleware/auth.js')
 
-route.post('/login', userControllor.loginUser)
+route.post('/login', userControllor.loginUser)//Done
 
-route.post('/register', userControllor.registerUser)
+route.post('/register', userControllor.registerUser)//Done
 
 route.get('/', userControllor.getUsers)
 
