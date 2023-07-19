@@ -1,6 +1,5 @@
 const User = require('../models/user')
 const userService = require('../../services/user')
-const { Exception } = require('handlebars')
 
 class UserController {
     //[GET]
@@ -24,9 +23,11 @@ class UserController {
                 message: 'Login user successfully',
                 data: existingUser
             })
-        } catch (exception) {
-            res.status(500).json({
-                message: exception.toString()
+        } catch (error) {
+            const statusCode = error.statusCode || 500
+            res.status(statusCode).json({
+                status: 'error',
+                message: error.toString()
             })
         }
 
@@ -41,12 +42,13 @@ class UserController {
                 data: user
             })
 
-        } catch (exception) {
-            res.status(500).json({
-                message: exception.toString()
+        } catch (error) {
+            const statusCode = error.statusCode || 500
+            res.status(statusCode).json({
+                status: 'error',
+                message: error.toString()
             })
         }
-        
     }
     // async getAllUser(req, res) {
     //     User.findAll()
